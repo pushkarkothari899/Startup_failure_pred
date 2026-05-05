@@ -47,6 +47,7 @@ A machine learning web application that predicts the probability of a startup fa
 ---
 
 ## 🧠 How it works
+```
 Raw Crunchbase Data (42k startups)
 ↓
 Data Cleaning (missing values, encoding)
@@ -60,6 +61,7 @@ XGBoost Classifier
 SHAP Explainer
 ↓
 Streamlit Web App
+```
 
 ---
 

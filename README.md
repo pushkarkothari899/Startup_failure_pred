@@ -30,39 +30,42 @@ A machine learning web application that predicts the probability of a startup fa
 
 ## 📊 Model Performance
 
-- **Algorithm:** XGBoost with `scale_pos_weight` for class imbalance
-- **Class 1 (Failed) Recall:** 0.56 — catches 56% of actual startup failures
+- **Algorithm:** XGBoost with `scale_pos_weight` + threshold tuning
+- **Accuracy:** 90% on held-out test set (8,454 samples)
+- **Macro F1:** 0.57 — balances performance across both classes
 - **Dataset:** 42,000+ startups, binary classification (failed vs not failed)
-- **Challenge:** Severe class imbalance (95% not failed, 5% failed) handled via SMOTE + scale_pos_weight
+- **Challenge:** Severe class imbalance (19:1) handled via SMOTE + scale_pos_weight + threshold tuning
 
 ---
 
 ## 🔍 Key Findings
 
 - `market_unknown` was the strongest predictor — startups with no identifiable market show highest risk
-- `founded_year` matters significantly — timing correlates with failure patterns
-- `funding_rounds` and funding type (angel, venture, equity) are strong signals
-- **Bias note:** `market_unknown` shows survivorship bias in the dataset — successful companies often had incomplete market tags. In a production system this feature would be dropped.
+- `founded_year` ranks #2 — timing correlates strongly with failure patterns
+- `funding_duration_days` (engineered feature) ranked in **top 5** — how long a startup kept raising money is a strong failure signal
+- `funding_per_round` and `startup_age_years` added as derived features to improve signal quality
+- **Bias note:** `market_unknown` shows survivorship bias — successful companies often had incomplete market tags. In a production system this feature would be dropped.
 
 ---
 
 ## 🧠 How it works
 ```
-Raw Crunchbase Data (42k startups)
+Raw Crunchbase Data (42,000+ startups)
 ↓
 Data Cleaning (missing values, encoding)
 ↓
-One-Hot Encoding (market, country)
+Feature Engineering (funding_duration_days, funding_per_round, startup_age_years)
+↓
+One-Hot Encoding (870+ features: market, country)
 ↓
 SMOTE (balance failed vs not-failed)
 ↓
-XGBoost Classifier
+XGBoost Classifier + Threshold Tuning
 ↓
 SHAP Explainer
 ↓
 Streamlit Web App
 ```
-
 ---
 
 ## 🚀 Run Locally

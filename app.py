@@ -65,6 +65,12 @@ if predict_btn:
         input_data['venture'] = venture
     if 'angel' in input_data.columns:
         input_data['angel'] = angel
+    if 'funding_duration_days' in input_data.columns:
+        input_data['funding_duration_days'] = 0  
+    if 'funding_per_round' in input_data.columns:
+        input_data['funding_per_round'] = funding_total / (funding_rounds + 1)
+    if 'startup_age_years' in input_data.columns:
+        input_data['startup_age_years'] = 2024 - founded_year    
 
     # Market encoding
     market_col = f'market_{market}'
@@ -133,7 +139,7 @@ else:
         """)
     with col2:
         st.subheader("Top Failure Predictors")
-        st.image("feature_importance.png", use_container_width=True)
+        st.image("feature_importance_updated.png", use_container_width=True)
 
 st.markdown("---")
 with st.expander("📊 Model Insights & Data Limitations (Read Before Use)"):

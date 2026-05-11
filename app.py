@@ -112,7 +112,7 @@ if predict_btn:
 
     with col2:
         st.subheader("Feature Importance")
-        img = plt.imread("feature_importance.png")
+        img = plt.imread("feature_importance_updated.png")
         st.image(img, caption="Top factors predicting startup failure", use_container_width=True)
 
     # SHAP explanation
